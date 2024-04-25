@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catagame - Juego de Preguntas</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* Ruta de la imagen de fondo */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .score {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para el contenedor de inicio */
+        .start-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Estilos para el logotipo */
+        .logo {
+            width: 300px; /* Ancho del logo */
+            height: auto; /* Altura automática */
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para los botones */
+        .start-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 235px; /* Ancho del botón */
+            height: 100px; /* Altura del botón */
+            margin-bottom: 10px;
+            background-size: cover;
+            text-indent: -9999px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .start-button {
+            background-image: url('http://pixelartmaker.com/art/99dfb62d8d4a664.png');
+        }
+
+        .ranking-button {
+            background-image: url('https://media.istockphoto.com/id/653908690/es/vector/trofeo-de-la-copa-del-vector-de-icono-plana.jpg?s=170667a&w=0&k=20&c=upKu_qjaa0Wm8tWx5TnMfeQEJy00wUFSDR0xTfj1UuU=');
+            width: 100px; /* Igual al alto del botón */
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilos para el campo de entrada de nombre */
+        .input-container {
+            margin-top: 20px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Estilos para el ranking */
+        .ranking-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .ranking-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Estilos para el termómetro */
+        .thermometer-container {
+            width: 20px;
+            height: 150px;
+            background-color: #ddd;
+            margin-bottom: 10px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .thermometer {
+            width: 100%;
+            background-color: red;
+        }
+
+        /* Estilos para la barra de puntaje negativo */
+        .negative-bar {
+            width: 20px;
+            background-color: blue;
+            float: left;
+        }
+
+        /* Estilos para las preguntas */
+        .question-container {
+            text-align: left;
+            background-color: #ffcccc; /* Fondo rojo para las preguntas */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos para las opciones de respuesta */
+        .option-button {
+            background-color: #007bff; /* Color azul para las opciones */
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .option-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container" class="container" style="display: none;">
+        <h1>Catagame - Juego de Preguntas</h1>
+        <div class="question-wrapper">
+            <div class="thermometer-container">
+                <div id="thermometer" class="thermometer"></div>
+                <div class="negative-bar" id="negative-bar"></div>
+            </div>
+            <div id="question" class="question-container"></div>
+        </div>
+        <p id="score" class="score">Puntaje: <span id="score-value">0</span></p>
+        <div id="options" class="button-container"></div>
+    </div>
+
+    <div id="start-container" class="container">
+        <div class="start-content">
+            <img src="https://u-static.fotor.com/images/text-to-image/result/PRO-4946af69700046a2a7f30e52b421e403.jpg" alt="Catagame" class="logo">
+            <div class="input-container">
+                <input type="text" id="player-name" class="input" placeholder="Ingresa tu nombre">
+                <div class="button-container">
+                    <button id="start-btn" class="button start-button">Star</button>
+                    <button id="ranking-btn" class="button ranking-button">Ranking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ranking-container" class="container" style="display: none;">
+        <h2>Ranking</h2>
+        <ol id="ranking-list" class="ranking-list">
+            <!-- Aquí se llenará dinámicamente con los nombres y puntajes -->
+        </ol>
+        <button id="reset-btn" class="btn btn-danger">Resetear Juego</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
